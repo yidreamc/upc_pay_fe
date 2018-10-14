@@ -10,7 +10,7 @@
             </el-table-column>
 
             <el-table-column label="操作" width="150">
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
                 </template>
@@ -39,7 +39,6 @@
                 <div v-if="form.type == 'NOTSCHOOL'">
 
                     <!--参数 1 start-->
-
                     <div v-if="form.p1method != 'NOT'">
 
                         <el-form-item label="参数1名称">
