@@ -31,7 +31,7 @@
                 <el-form-item label="缴费类型">
                     <el-select v-model="form.type" placeholder="请选择缴费类型">
                         <el-option label="校外用户" value="NOTSCHOOL"></el-option>
-                        <el-option label="校内用户" value="SCHOOL"></el-option>
+                        <!-- <el-option label="校内用户" value="SCHOOL"></el-option> -->
                     </el-select>
                 </el-form-item>
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let ajax = axios.create({
+const ajax = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
