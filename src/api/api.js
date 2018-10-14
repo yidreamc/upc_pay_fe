@@ -13,8 +13,8 @@ let base = 'http://wxsportscard.upc.edu.cn:8088';
 let front = 'http://wxsportscard.upc.edu.cn/'
 
 if (process.env.NODE_ENV === 'development') {
-    base = 'http://localhost:8089';
-    front = 'http://localhost:8080/'
+    base = '/api';
+    front = 'http://localhost:8000/'
 }
 
 export const fronturl = front;
