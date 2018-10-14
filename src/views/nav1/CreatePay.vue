@@ -473,7 +473,8 @@
                             }
 
                         }
-                        ;
+
+                        self.loading = true;
 
                         // 提交表单
                         create(form).then((res) => {
@@ -493,8 +494,8 @@
                         self.loading = false;
                         return false;
                     }
-
                 });
+                self.loading = false;
             }
 
         }
