@@ -1,7 +1,7 @@
 {
   "name": "upc_pay_fe",
   "version": "2.0.1",
-  "description": "石大二维码缴费后端",
+  "description": "石大二维码缴费前端",
   "author": "yidreamc <710801583@qq.com>",
   "license": "MIT",
   "scripts": {

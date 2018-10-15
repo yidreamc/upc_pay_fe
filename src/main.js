@@ -35,23 +35,23 @@ const router = new VueRouter({
 });
 
 
-if (process.env.NODE_ENV === 'development') {
-    //测试环境
-} else {
-    router.beforeEach((to, from, next) => {
+// if (process.env.NODE_ENV === 'development') {
+//     //测试环境
+// } else {
+//     router.beforeEach((to, from, next) => {
 
-        if (to.path == '/auth') {
-            localStorage.removeItem('manage');
-        }
-        let user = JSON.parse(localStorage.getItem('manage'));
+//         if (to.path == '/auth') {
+//             localStorage.removeItem('manage');
+//         }
+//         let user = JSON.parse(localStorage.getItem('manage'));
 
-        if (!user && (to.path.indexOf('/manage') != -1 || to.path.indexOf('/admin') != -1)) {
-            next({path: '/noauth'})
-        } else {
-            next()
-        }
-    })
-}
+//         if (!user && (to.path.indexOf('/manage') != -1 || to.path.indexOf('/admin') != -1)) {
+//             next({path: '/noauth'})
+//         } else {
+//             next()
+//         }
+//     })
+// }
 
 
 new Vue({

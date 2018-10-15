@@ -10,8 +10,10 @@ services:
     image: nginx
     ports:
       - 80:80
-    container_name: "upc_pay_pe_web"
+    container_name: "upc_pay_pe"
     restart: always
+    external_links:
+      - "upc_pay_java:upc_pay_java"
     volumes:
       - dist:/usr/share/nginx/html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf

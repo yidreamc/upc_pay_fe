@@ -8,12 +8,11 @@ const ajax = axios.create({
 
 ajax.defaults.withCredentials = true;
 
-let base = 'http://wxsportscard.upc.edu.cn:8088';
+let base = '/api';
 
 let front = 'http://wxsportscard.upc.edu.cn/'
 
 if (process.env.NODE_ENV === 'development') {
-    base = '/api';
     front = 'http://localhost:8000/'
 }
 
