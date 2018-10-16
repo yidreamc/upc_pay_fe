@@ -8,6 +8,7 @@ import Vuex from 'vuex'
 import routes from './routes'
 import 'font-awesome/css/font-awesome.min.css'
 import {level} from './api/api.js'
+import request from './utils/request'
 
 Vue.use(ElementUI);
 Vue.use(VueRouter);
@@ -34,6 +35,14 @@ const router = new VueRouter({
     routes
 });
 
+request({
+    path: '/api/manage/xxxx',
+    method: 'GET',
+    params: {
+        a: 11,
+        b: 22
+    }
+}).then(res => console.log(res))
 
 // if (process.env.NODE_ENV === 'development') {
 //     //测试环境

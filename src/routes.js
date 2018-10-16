@@ -35,9 +35,10 @@ let routes = [
         component: Home,
         name: '缴费管理',
         iconCls: 'el-icon-message',//图标样式class
+        permission: ['DEP', 'SUPPER'],
         children: [
-            {path: '/manage/select', component: Select, name: '查看缴费'},
-            {path: '/manage/create', component: CreatePay, name: '新建缴费'},
+            { path: '/manage/select', component: Select, name: '查看缴费' },
+            { path: '/manage/create', component: CreatePay, name: '新建缴费' },
         ]
     },
 
@@ -45,12 +46,11 @@ let routes = [
         path: '/',
         component: Home,
         name: '管理员操作',
-        iconCls: 'fa fa-id-card-o',
+        permission: ['SUPPER'],
         children: [
-            {path: '/admin/admin', component: ManageAdmin, name: '管理部门管理员'},
-            {path: '/admin/bill', component: Bill, name: '管理税号'},
+            { path: '/admin/admin', component: ManageAdmin, name: '管理部门管理员' },
+            { path: '/admin/bill', component: Bill, name: '管理税号' },
         ],
-        hidden: true
     },
 
     {
@@ -61,7 +61,7 @@ let routes = [
         leaf: true,//只有一个节点
         hidden: true,
         children: [
-            {path: '/page6', component: Page6, name: '导航三'}
+            { path: '/page6', component: Page6, name: '导航三' }
         ]
     },
     {
@@ -69,9 +69,8 @@ let routes = [
         component: Home,
         name: 'Charts',
         iconCls: 'fa fa-bar-chart',
-        hidden: true,
         children: [
-            {path: '/echarts', component: echarts, name: 'echarts'}
+            { path: '/echarts', component: echarts, name: 'echarts' }
         ]
     },
     {
