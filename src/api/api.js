@@ -1,4 +1,5 @@
 import axios from 'axios';
+import request from '../utils/request'
 
 const ajax = axios.create({
     headers: {
@@ -21,7 +22,13 @@ export const qrBase = 'http://qr.liantu.com/api.php?&w=200&text=';
 export const uploadurl = `${base}/admin/uploadfile`;
 
 export const auth = params => {
-    return ajax.post(`${base}/auth`, JSON.stringify(params)).then(res => res.data);
+    const options = {
+        path: `${base}/auth`,
+        method: 'POST',
+        needAuth: false,
+        params,
+    }
+    return request(options)
 };
 
 export const create = params => {
