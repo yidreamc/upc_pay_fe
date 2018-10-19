@@ -94,7 +94,13 @@ export const getPaymentData = params => {
 
 
 export const requestLogin = params => {
-    return axios.post(`${base}/login`, params).then(res => res.data);
+    const options = {
+        path: `${base}/login`,
+        method: 'POST',
+        needAuth: false,
+        params,
+    }
+    return request(options);
 };
 
 export const getUserList = params => {

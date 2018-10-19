@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       sysName: "二维码缴费后台",
-      role: 'DEP', // 登陆的用户角色
+      role: '', // 登陆的用户角色
       sysUserName: "",
       sysUserAvatar: "",
       form: {
@@ -75,7 +75,14 @@ export default {
     },
     handleselect: function(a, b) {}
   },
-  mounted() {}
+  mounted() {
+    let user = localStorage.getItem('user');
+    if(!user){
+      this.$router.push({ path: '/login' });
+    }
+    user = JSON.parse(user);
+    this.role = user.adminType;
+  }
 };
 </script>
 
