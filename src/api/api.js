@@ -48,10 +48,6 @@ export const level = params => {
     return ajax.get(`${base}/manage/level`, {params: params}).then(res => res.data);
 };
 
-export const getAllList = params => {
-    return ajax.get(`${base}/manage/allList`, {params: params}).then(res => res.data);
-};
-
 export const getOne = params => {
     return ajax.get(`${base}/manage/getOne`, {params: params}).then(res => res.data);
 };

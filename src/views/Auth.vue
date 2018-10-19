@@ -16,9 +16,8 @@
                 if(data.code === 0) {
                     localStorage.setItem('user',JSON.stringify(data.data))
                 }else{
-
-                    // 认证失败
-                    console.log('认证失败');
+                    // 认证失败 返回数字石大
+                    window.location.href = 'http://i.upc.edu.cn';
                 }
             });
             

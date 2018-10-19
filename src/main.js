@@ -7,61 +7,28 @@ import store from './vuex/store'
 import Vuex from 'vuex'
 import routes from './routes'
 import 'font-awesome/css/font-awesome.min.css'
-import {level} from './api/api.js'
-import request from './utils/request'
 
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
-let l = routes;
-//查询管理员级别
-level().then((res) => {
-
-    console.log(res.data);
-    if (res.data == null) {
-        return;
-    }
-    if (res.data != 'GENERAL') {
-        routes.find((x) => {
-            if (x.name == '管理员操作') {
-                x.hidden = false;
-            }
-        })
-    }
-
-});
 const router = new VueRouter({
     routes
 });
 
-request({
-    path: '/api/manage/xxxx',
-    method: 'GET',
-    params: {
-        a: 11,
-        b: 22
+router.beforeEach((to, from, next) => {
+    if (to.path.indexOf('/auth') != -1 || to.path.indexOf('/login') != -1) {
+        next()
+    } else {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(!user){
+
+            // 用户未登陆
+        }else{
+            next();
+        }
     }
-}).then(res => console.log(res))
-
-// if (process.env.NODE_ENV === 'development') {
-//     //测试环境
-// } else {
-//     router.beforeEach((to, from, next) => {
-
-//         if (to.path == '/auth') {
-//             localStorage.removeItem('manage');
-//         }
-//         let user = JSON.parse(localStorage.getItem('manage'));
-
-//         if (!user && (to.path.indexOf('/manage') != -1 || to.path.indexOf('/admin') != -1)) {
-//             next({path: '/noauth'})
-//         } else {
-//             next()
-//         }
-//     })
-// }
-
+})
 
 new Vue({
     router,

@@ -9,6 +9,7 @@ const fetch = axios.create({
 fetch.defaults.withCredentials = true;
 
 export default function request(options = { needAuth: true, method: 'GET' }) {
+    options = { ...{ needAuth: true, method: 'GET' }, ...options }
     let { path, method, params, needAuth } = options;
 
     let user = localStorage.getItem('user');
@@ -20,21 +21,19 @@ export default function request(options = { needAuth: true, method: 'GET' }) {
     if (method === 'GET') {
         return fetch.get(path, { params: params }).then(res => {
             if (res.data.code === 401) {
-                // 没有权限操作
-                console.warn('没有权限操作!');
+                // 没有权限 重新登陆
+                window.location.href = '#/login';
             } else {
-
                 // 正常返回，具体业务具体处理
                 return res.data;
             }
         });
     } else if (method === 'POST') {
-       return fetch.post(path, JSON.stringify(params)).then(res => {
+        return fetch.post(path, JSON.stringify(params)).then(res => {
             if (res.data.code === 401) {
-                // 没有权限操作
-                console.warn('没有权限操作!');
+                 // 没有权限 重新登陆
+                window.location.href = '#/login';
             } else {
-
                 // 正常返回，具体业务具体处理
                 return res.data;
             }

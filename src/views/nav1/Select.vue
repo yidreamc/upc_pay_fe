@@ -297,8 +297,8 @@
 
 <script>
 
-    import {getAllList, deletePayment, getOne, edit, fronturl, qrBase} from '../../api/api';
-
+    import { deletePayment, getOne, edit, fronturl, qrBase} from '../../api/api';
+    import { getAllList } from '../../api/viewPayItem';
 
     export default {
         data() {
@@ -333,8 +333,8 @@
         methods: {
             getList() {
                 this.listLoading = true;
-                getAllList().then((res) => {
-                    this.list = res.data;
+                getAllList().then((data) => {
+                    this.list = data.data;
                     this.listLoading = false;
                 });
             },
