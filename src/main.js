@@ -22,8 +22,8 @@ router.beforeEach((to, from, next) => {
     } else {
         const user = JSON.parse(localStorage.getItem('user'));
         if(!user){
-
             // 用户未登陆
+            window.location.href = '#/login?redirect=' + window.location.hash.substr(1);
         }else{
             next();
         }

@@ -22,7 +22,7 @@
         logining: false,
         ruleForm: {
           uname: '',
-          pwd: ''
+          pwd: '',
         },
         rules: {
           uname: [
@@ -59,7 +59,12 @@
               } else {
                 localStorage.setItem('user', JSON.stringify(data.data));
                 this.checked && localStorage.setItem('loginInfo',JSON.stringify(this.ruleForm));
-                this.$router.push({ path: '/' });
+                const redirect = this.$route.query.redirect;
+                if(redirect){
+                   this.$router.push({ path: redirect });
+                }else{
+                  this.$router.push({ path: '/' });
+                }
               }
             });
           } else {

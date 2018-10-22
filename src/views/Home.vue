@@ -1,22 +1,30 @@
 <template>
     <el-row class="container">
         <el-col :span="24" class="header">
-            <el-col :span="10" class='logo logo-width'>
-                {{sysName}}
-            </el-col>
+          <el-col :span="10" class='logo logo-width'>
+              {{sysName}}
+          </el-col>
+          <el-col :span="4" class="userinfo">
+            <el-dropdown trigger="hover">
+              <span class="el-dropdown-link userinfo-inner">{{sysUserName}}</span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click.native="handleLogout">退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-col>
         </el-col>
         <el-col :span="24" class="main">
             <aside class='menu-expanded'>
                 <!--导航菜单-->
-                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose"
+                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @close="handleclose"
                     @select="handleselect" unique-opened router>
-                    <template v-for="(item,index) in $router.options.routes" v-if=" !(!item.permission || !item.permission.includes(role)) ">
+                    <template v-for="(item,index) in $router.options.routes" v-if=" hasRole(item) ">
                         <el-submenu :index="index+''" v-if="!item.leaf" :key="item.key">
                             <template slot="title">{{item.name}}</template>
-                            <el-menu-item v-for="child in item.children" :index="child.path" :key="child.key" v-if="!child.hidden">{{child.name}}
+                            <el-menu-item v-for="child in item.children" :index="child.path" :key="child.key" v-if="hasRole(child)">{{child.name}}
                             </el-menu-item>
                         </el-submenu>
-                        <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i
+                        <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path" :key="item.key"><i
                                 :class="item.iconCls"></i>{{item.children[0].name}}
                         </el-menu-item>
                     </template>
@@ -44,13 +52,14 @@
 </template>
 
 <script>
+  import { logout } from '../api/home';
+
 export default {
   data() {
     return {
       sysName: "二维码缴费后台",
-      role: '', // 登陆的用户角色
-      sysUserName: "",
-      sysUserAvatar: "",
+      role: "", // 登陆的用户角色
+      sysUserName: '', // 登录的用户名
       form: {
         name: "",
         region: "",
@@ -60,15 +69,21 @@ export default {
         type: [],
         resource: "",
         desc: ""
-      },
+      }
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
+    handleLogout() {
+      logout().then(data => {
+        localStorage.removeItem('user');
+        this.$router.push({ path: '/login' });
+      })
     },
-    handleopen() {
-      //console.log('handleopen');
+    hasRole(child) {
+      if(!child.permission){
+        return true;
+      }
+      return child.permission.includes(this.role)
     },
     handleclose() {
       //console.log('handleclose');
@@ -76,18 +91,21 @@ export default {
     handleselect: function(a, b) {}
   },
   mounted() {
-    let user = localStorage.getItem('user');
-    if(!user){
-      this.$router.push({ path: '/login' });
+    let user = localStorage.getItem("user");
+    if (!user) {
+      this.$router.push({ path: "/login" });
     }
     user = JSON.parse(user);
-    this.role = user.adminType;
+    if(user){
+      this.role = user.adminType;
+      this.sysUserName = user.uname;
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
-$color-primary: #20a0ff; //#18c79c
+$color-primary: #20a0ff;
 
 .container {
   position: absolute;

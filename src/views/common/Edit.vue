@@ -1,11 +1,11 @@
 <template>
 
     <div>
-
         <el-form ref="form" :model="form" label-width="80px"
                  :rules="rules"
                  v-loading="loading"
                  style="margin:20px;width:60%;min-width:600px;">
+
             <el-form-item label="缴费名称" prop="name">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
@@ -17,11 +17,9 @@
                 </el-select>
             </el-form-item>
 
-
             <div v-if="form.type == 'NOTSCHOOL'">
 
                 <!--参数 1 start-->
-
                 <div v-if="form.p1method != 'NOT'">
 
                     <el-form-item label="参数1名称">
@@ -77,9 +75,7 @@
                         </el-form-item>
 
                     </div>
-
                 </div>
-
                 <!--参数 1 end-->
 
 
@@ -205,9 +201,7 @@
 
                 <!--每个收费项的小项 end-->
 
-
             </el-form-item>
-
 
             <el-form-item>
                 <el-button @click="addItem">添加收费项</el-button>
@@ -229,43 +223,34 @@
                 <el-input type="textarea" v-model="form.remark"></el-input>
             </el-form-item>
 
-
             <el-form-item label="subsysid" prop="subsysid">
                 <el-input v-model="form.subsysid"></el-input>
             </el-form-item>
-
 
             <el-form-item label="sysid" prop="sysid">
                 <el-input v-model="form.sysid"></el-input>
             </el-form-item>
 
-
             <el-form-item label="feeitemid" prop="feeitemid">
                 <el-input v-model="form.feeitemid"></el-input>
             </el-form-item>
-
 
             <el-form-item label="cert" prop="cert">
                 <el-input v-model="form.cert" type="textarea"></el-input>
             </el-form-item>
 
-
             <el-form-item>
                 <el-button type="primary" @click="subForm('form')">立即创建</el-button>
             </el-form-item>
 
-
         </el-form>
-
 
         <el-dialog
                 title="错误"
                 :visible.sync="err"
                 width="30%">
             <span>{{ msgA }}</span>
-
             <el-button @click="err = false">确 定</el-button>
-
         </el-dialog>
 
         <el-dialog
@@ -277,7 +262,6 @@
             <el-button @click="qrcode = false">确 定</el-button>
 
         </el-dialog>
-
     </div>
 
 </template>

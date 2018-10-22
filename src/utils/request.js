@@ -22,7 +22,7 @@ export default function request(options = { needAuth: true, method: 'GET' }) {
         return fetch.get(path, { params: params }).then(res => {
             if (res.data.code === 401) {
                 // 没有权限 重新登陆
-                window.location.href = '#/login';
+                window.location.href = '#/login?redirect=' + window.location.hash.substr(1);
             } else {
                 // 正常返回，具体业务具体处理
                 return res.data;
@@ -32,7 +32,7 @@ export default function request(options = { needAuth: true, method: 'GET' }) {
         return fetch.post(path, JSON.stringify(params)).then(res => {
             if (res.data.code === 401) {
                  // 没有权限 重新登陆
-                window.location.href = '#/login';
+                window.location.href = '#/login?redirect=' + window.location.hash.substr(1);
             } else {
                 // 正常返回，具体业务具体处理
                 return res.data;
