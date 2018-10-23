@@ -16,16 +16,16 @@
         <el-col :span="24" class="main">
             <aside class='menu-expanded'>
                 <!--导航菜单-->
-                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @close="handleclose"
-                    @select="handleselect" unique-opened router>
-                    <template v-for="(item,index) in $router.options.routes" v-if=" hasRole(item) ">
-                        <el-submenu :index="index+''" v-if="!item.leaf" :key="item.key">
+                <el-menu :default-active="$route.path" :default-openeds="handleOpen()" class="el-menu-vertical-demo"
+                    @select="handleselect" unique-opened router >
+                    <template v-for="item in $router.options.routes" v-if="hasRole(item)">
+                        <el-submenu :index="item.path" v-if="!item.leaf" :key="item.key" >
                             <template slot="title">{{item.name}}</template>
-                            <el-menu-item v-for="child in item.children" :index="child.path" :key="child.key" v-if="hasRole(child)">{{child.name}}
+                            <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="hasRole(child)">{{child.name}}
                             </el-menu-item>
                         </el-submenu>
-                        <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path" :key="item.key"><i
-                                :class="item.iconCls"></i>{{item.children[0].name}}
+                        <el-menu-item v-if="item.leaf" :index="item.path" :key="item.path">
+                          {{item.name}}
                         </el-menu-item>
                     </template>
                 </el-menu>
@@ -52,41 +52,41 @@
 </template>
 
 <script>
-  import { logout } from '../api/home';
-
+import { logout } from "../api/home";
 export default {
   data() {
     return {
       sysName: "二维码缴费后台",
       role: "", // 登陆的用户角色
-      sysUserName: '', // 登录的用户名
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      }
+      sysUserName: "" // 登录的用户名
     };
   },
   methods: {
     handleLogout() {
       logout().then(data => {
-        localStorage.removeItem('user');
-        this.$router.push({ path: '/login' });
-      })
+        localStorage.removeItem("user");
+        this.$router.push({ path: "/login" });
+      });
     },
     hasRole(child) {
-      if(!child.permission){
+      if (!child.permission) {
         return true;
       }
-      return child.permission.includes(this.role)
+      return child.permission.includes(this.role);
     },
-    handleclose() {
-      //console.log('handleclose');
+    handleOpen() {
+      const father = this.$router.options.routes.find(item => {
+          if(item.children){
+            const j = item.children.find(i => i.path === this.$route.path);
+            if(j){
+              return j;
+            }
+          }
+      });;
+      if(father){
+        return [father.path];
+      }
+      return ['']
     },
     handleselect: function(a, b) {}
   },
@@ -96,7 +96,7 @@ export default {
       this.$router.push({ path: "/login" });
     }
     user = JSON.parse(user);
-    if(user){
+    if (user) {
       this.role = user.adminType;
       this.sysUserName = user.uname;
     }
