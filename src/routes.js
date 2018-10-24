@@ -16,6 +16,8 @@ import echarts from './views/charts/echarts.vue'
 import Noauth from './views/Noauth'
 import Auth from './views/Auth'
 
+import Maintain from '@views/maintain/index'
+
 let routes = [
     {
         path: '/dashboard',
@@ -60,18 +62,6 @@ let routes = [
             { path: '/admin/bill', component: Bill, name: '管理税号', key: '202' },
         ],
     },
-
-    {
-        path: '/',
-        component: Home,
-        name: '',
-        iconCls: 'fa fa-address-card',
-        leaf: true,//只有一个节点
-        permission: ['BAN'],
-        children: [
-            // { path: '/page6', component: Page6, name: '导航三' }
-        ]
-    },
     {
         path: '/',
         component: Home,
@@ -100,6 +90,11 @@ let routes = [
     {
         path: '/auth',
         component: Auth,
+        permission: ['BAN']
+    },
+    {
+        path: '/maintain',
+        component: Maintain,
         permission: ['BAN']
     },
     // {
