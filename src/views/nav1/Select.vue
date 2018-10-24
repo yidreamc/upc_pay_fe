@@ -10,7 +10,7 @@
             </el-table-column>
 
             <el-table-column label="操作" width="150">
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
                 </template>
@@ -31,7 +31,7 @@
                 <el-form-item label="缴费类型">
                     <el-select v-model="form.type" placeholder="请选择缴费类型">
                         <el-option label="校外用户" value="NOTSCHOOL"></el-option>
-                        <el-option label="校内用户" value="SCHOOL"></el-option>
+                        <!-- <el-option label="校内用户" value="SCHOOL"></el-option> -->
                     </el-select>
                 </el-form-item>
 
@@ -39,7 +39,6 @@
                 <div v-if="form.type == 'NOTSCHOOL'">
 
                     <!--参数 1 start-->
-
                     <div v-if="form.p1method != 'NOT'">
 
                         <el-form-item label="参数1名称">
@@ -298,8 +297,8 @@
 
 <script>
 
-    import {getAllList, deletePayment, getOne, edit, fronturl, qrBase} from '../../api/api';
-
+    import { deletePayment, getOne, edit, fronturl, qrBase} from '../../api/api';
+    import { getAllList } from '../../api/viewPayItem';
 
     export default {
         data() {
@@ -334,8 +333,8 @@
         methods: {
             getList() {
                 this.listLoading = true;
-                getAllList().then((res) => {
-                    this.list = res.data;
+                getAllList().then((data) => {
+                    this.list = data.data;
                     this.listLoading = false;
                 });
             },

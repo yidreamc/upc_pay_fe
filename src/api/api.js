@@ -1,6 +1,7 @@
 import axios from 'axios';
+import request from '../utils/request'
 
-let ajax = axios.create({
+const ajax = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
@@ -8,13 +9,12 @@ let ajax = axios.create({
 
 ajax.defaults.withCredentials = true;
 
-let base = 'http://wxsportscard.upc.edu.cn:8088';
+let base = '/api';
 
 let front = 'http://wxsportscard.upc.edu.cn/'
 
 if (process.env.NODE_ENV === 'development') {
-    base = 'http://localhost:8089';
-    front = 'http://localhost:8080/'
+    front = 'http://localhost:8000/'
 }
 
 export const fronturl = front;
@@ -22,7 +22,13 @@ export const qrBase = 'http://qr.liantu.com/api.php?&w=200&text=';
 export const uploadurl = `${base}/admin/uploadfile`;
 
 export const auth = params => {
-    return ajax.post(`${base}/auth`, JSON.stringify(params)).then(res => res.data);
+    const options = {
+        path: `${base}/auth`,
+        method: 'POST',
+        needAuth: false,
+        params,
+    }
+    return request(options)
 };
 
 export const create = params => {
@@ -40,10 +46,6 @@ export const deletePayment = params => {
 
 export const level = params => {
     return ajax.get(`${base}/manage/level`, {params: params}).then(res => res.data);
-};
-
-export const getAllList = params => {
-    return ajax.get(`${base}/manage/allList`, {params: params}).then(res => res.data);
 };
 
 export const getOne = params => {
@@ -87,24 +89,19 @@ export const getPaymentData = params => {
 };
 
 
-
-
-
-
-
-
-
-
-
 export const requestLogin = params => {
-    return axios.post(`${base}/login`, params).then(res => res.data);
+    const options = {
+        path: `${base}/login`,
+        method: 'POST',
+        needAuth: false,
+        params,
+    }
+    return request(options);
 };
 
 export const getUserList = params => {
     return axios.get(`${base}/user/list`, {params: params});
 };
-
-
 
 
 export const editUser = params => {

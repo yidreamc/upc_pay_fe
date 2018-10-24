@@ -15,7 +15,7 @@
             </el-table-column>
 
             <el-table-column label="操作" sortable>
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-button type="danger" size="small" @click="delAdmin(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>

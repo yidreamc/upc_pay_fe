@@ -78,7 +78,7 @@
                                class="p-input"
                                v-model="form.zzUnit"
                                @change="changeBill">
-                        <div v-for="(bill, index) in bills"
+                        <div v-for="bill in bills"
                              :key="bill.key">
                             <el-option :label="bill.zzUnit" :value="bill.zzUnit"></el-option>
                         </div>
@@ -139,12 +139,13 @@
 </template>
 
 <script>
-    import {getPaymentPageData, allBill, getPaymentData} from '../../api/api'
+    import { allBill, getPaymentData} from '../../api/api'
     import CheckMsg from "../CheckMsg";
+    import { getPaymentPageData } from '@api/paycommon'
 
     export default {
         name: "PayCommon",
-        components: {CheckMsg},
+        components: { CheckMsg },
         data() {
             return {
                 payid: '',
@@ -171,7 +172,7 @@
                     id: id
                 };
                 getPaymentPageData(param).then((res) => {
-                    self.payment = res.data;
+                    self.payment = res;
                 });
 
                 allBill().then((res) => {

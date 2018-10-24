@@ -1,34 +1,26 @@
 <template>
-
 </template>
 
 <script>
-    import { auth } from '../api/api.js'
-
+    import { auth } from '../api/api'
     export default {
         name: "Auth",
-        data() {
-            return {}
-        },
         mounted() {
-            let un = this.$route.query.un;
-            let verify = this.$route.query.verify;
-            let param = {
+            const un = this.$route.query.un;
+            const verify = this.$route.query.verify;
+            const param = {
                 un: un,
                 verify: verify
             };
-            auth(param).then((res) => {
-                if(res.code === 0){
-                    localStorage.setItem("manage",true);
-                    this.$router.push({path: '/'})
-                }else {
-                    this.$router.push({path: '/noauth'})
+            auth(param).then(data => {
+                if(data.code === 0) {
+                    localStorage.setItem('user',JSON.stringify(data.data))
+                }else{
+                    // 认证失败 返回数字石大
+                    window.location.href = 'http://i.upc.edu.cn';
                 }
-            })
+            });
+            
         }
     }
 </script>
-
-<style scoped>
-
-</style>

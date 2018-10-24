@@ -1,7 +1,7 @@
 import Login from './views/Login.vue'
 import NotFound from './views/404.vue'
 import Select from './views/nav1/Select.vue'
-import CreatePay from './views/nav1/CreatePay.vue'
+import EditPay from './views/common/Edit'
 import ManageAdmin from './views/nav2/ManageAdmin.vue'
 import Bill from './views/nav2/Bill.vue'
 import Home from './views/Home.vue'
@@ -11,92 +11,95 @@ import PaymentCommon from './views/pay/PayCommon.vue'
 import PayReturn from './views/pay/PayReturn.vue'
 
 
-import Page6 from './views/nav3/Page6.vue'
 import echarts from './views/charts/echarts.vue'
 
 import Noauth from './views/Noauth'
 import Auth from './views/Auth'
 
+import Maintain from '@views/maintain/index'
+
 let routes = [
+    {
+        path: '/dashboard',
+        component: Home,
+        name: 'Dashboard',
+        leaf: true,
+        children: [
+            { path: '', component: NotFound, },
+        ]
+    },
     {
         path: '/login',
         component: Login,
-        name: '',
-        hidden: true
+        permission: ['BAN']
     },
     {
         path: '/404',
         component: NotFound,
-        name: '',
-        hidden: true
+        permission: ['BAN']
     },
     {
-        path: '/',
+        path: '/common',
         component: Home,
         name: '缴费管理',
         iconCls: 'el-icon-message',//图标样式class
+        permission: ['DEP', 'SUPPER'],
         children: [
-            {path: '/manage/select', component: Select, name: '查看缴费'},
-            {path: '/manage/create', component: CreatePay, name: '新建缴费'},
+            { path: '/common/select', component: Select, name: '查看缴费', key: '101', },
+            { path: '/common/create', component: EditPay, name: '新建缴费', key: '102' },
+            { path: '/common/:type/:id', component: EditPay, permission: ['BAN'], },
         ]
     },
 
     {
-        path: '/',
+        path: '/admin',
         component: Home,
         name: '管理员操作',
-        iconCls: 'fa fa-id-card-o',
+        permission: ['SUPPER'],
+        key: '200',
         children: [
-            {path: '/admin/admin', component: ManageAdmin, name: '管理部门管理员'},
-            {path: '/admin/bill', component: Bill, name: '管理税号'},
+            { path: '/admin/admin', component: ManageAdmin, name: '管理部门管理员', key: '201' },
+            { path: '/admin/bill', component: Bill, name: '管理税号', key: '202' },
         ],
-        hidden: true
-    },
-
-    {
-        path: '/',
-        component: Home,
-        name: '',
-        iconCls: 'fa fa-address-card',
-        leaf: true,//只有一个节点
-        hidden: true,
-        children: [
-            {path: '/page6', component: Page6, name: '导航三'}
-        ]
     },
     {
         path: '/',
         component: Home,
         name: 'Charts',
         iconCls: 'fa fa-bar-chart',
-        hidden: true,
+        permission: ['BAN'],
         children: [
-            {path: '/echarts', component: echarts, name: 'echarts'}
+            { path: '/echarts', component: echarts, name: 'echarts' }
         ]
     },
     {
         path: '/noauth',
         component: Noauth,
-        hidden: true
+        permission: ['BAN']
     },
     {
         path: '/pay',
         component: PaymentCommon,
-        hidden: true
+        permission: ['BAN']
     },
     {
         path: '/payreturn',
         component: PayReturn,
-        hidden: true
+        permission: ['BAN']
     },
     {
         path: '/auth',
         component: Auth,
-        hidden: true
+        permission: ['BAN']
+    },
+    {
+        path: '/maintain',
+        component: Maintain,
+        permission: ['BAN']
     },
     // {
     //     path: '*',
-    //     hidden: true,
+    //      permission: ['BAN'],
     //     redirect: { path: '/404' }
     // }
 ];
